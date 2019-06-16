@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>設定 GreenChrome</title>
+    <link id="favicon" rel="icon" type="image/png" href="static/favicon.png">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="format-detection" content="telephone=no"/>
+    <link href="static/bootstrap.min.css" rel="stylesheet">
+    <link href="static/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="static/bootstrap-select.min.css" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Segoe UI',Arial,'Microsoft Yahei',sans-serif;
+      }
+      h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, .lead, a, .a, label, option, input, span, select, button, textarea, div {
+        font-family: 'Segoe UI',Arial,'Microsoft Yahei',sans-serif;
+      }
+    </style>
+  </head>
+  <body spellcheck="false">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-2 hidden-sm hidden-xs">
+          <h2></h2>
+          <ul class="nav nav-pills nav-stacked affix">
+            <li><a href="#base-setting">基本設定</a></li>
+            <li><a href="#UI-enhance">介面增強</a></li>
+            <li><a href="#append-command">追加參數</a></li>
+            <li><a href="#start-run">啟動時執行</a></li>
+            <li><a href="#end-run">關閉時執行</a></li>
+            <li><a href="#mouse-gesture">滑鼠手勢</a></li>
+            <li><a href="#check-update">Chrome更新</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-12 col-md-8">
+
+          <h2>設定 GreenChrome</h2>
+          <div class="well well-sm">
+            <div>GreenChrome是一個由 <a class="alert-link" href="https://www.shuax.com/?greenchrome" target="_blank">shuax</a> 開發，用來增強Chrome的免費工具</div>
+            <div>路徑支援 <code>%appdata%</code> 這樣的環境變數，特別的 <code>%app%</code> 代表程式目前所在目錄</div>
+            <div>你也可以開啟程式目錄下的 <code>GreenChrome.ini</code> 設定檔來手動變更設定</div>
+            <div>臺灣中文化作者： <a class="alert-link" href="http://greedphantom.blogspot.tw/" target="_blank">zhtw</a>有空可以逛逛他的Blog！</div>
+          </div>
+          <div class="alert alert-warning">
+            <div>部分設定需要重新啟動瀏覽器以後才能生效</div>
+          </div>
+          <div class="alert alert-danger hide">
+            <div id="debug">目前無法連線到GreenChrome設定</div>
+          </div>
+          <div class="alert alert-success hide">
+            <div id="update_tips">GreenChrome已有新版本，請訪問 <a href="https://www.shuax.com/archives/ChromeUpdater.html" target="_blank">官方網站</a> 獲取</div>
+          </div>
+
+          <a name="base-setting"></a>
+          <h4>基本設定</h4>
+          <div class="row">
+            <div class="col-xs-offset-0 col-xs-11">
+
+              <div class="form-inline">
+                <div class="form-control-static">使用者資料目錄：</div>
+                <input type="text" class="form-control kv" style="width:70%;" id="UserData" data-section="基本设置" data-name="数据目录">
+                <div class="text-muted">　類似<code>--user-data-dir</code>強制重新導向使用者資料目錄，但不會導致雙圖示</div>
+                <p class="text-muted">　如果是安裝版使用者，清空此選項即可使用原有資料</p>
+              </div>
+
+              <div class="form-inline">
+                <p class="form-control-static">老闆鍵：</p>
+                <input type="text" class="form-control kv" style="width:70%;" id="BossKey" data-section="基本设置" data-name="老板键">
+                <p class="text-muted">　按下老闆鍵後可隱藏所有Chrome視窗，再次按下即可恢復</p>
+              </div>
+
+              <div class="form-inline">
+                <p class="form-control-static">新分頁的頁面：</p>
+                <input type="text" class="form-control kv" style="width:70%;" id="HTMLFile" data-section="基本设置" data-name="新标签页面">
+                <div class="text-muted">　可以自訂新分頁為本地html檔案，不填不變更，推薦使用<code>%app%</code>來指定位置</div>
+                <div class="text-muted">　檔案只能<code>1k</code>左右，超過部分會被自動截斷</div>
+                <div class="text-muted">　有個內建的展示效果，名字為<code>%demo%</code></div>
+                <p class="text-muted">　還可以直接填寫<code>http</code>開頭的網址，將由iframe顯示</p>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="RemoveUpdateError" data-section="基本设置" data-name="移除更新错误">
+                  移除更新錯誤
+                </label>
+                <div class="text-muted">　　離線安裝包並未包含更新程式，點開關於時會有錯誤提示，此選項可關閉錯誤提示</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="KillAtEnd" data-section="基本设置" data-name="自动结束运行程序">
+                  自動結束執行程式
+                </label>
+                <div class="text-muted">　　在Chrome關閉時自動結束啟動時執行的程式</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="MakePortable" data-section="基本设置" data-name="便携化">
+                  可攜化
+                </label>
+                <div class="text-muted">　　可以打造可攜版Chrome，防止更換電腦時重設個人設定</div>
+                <div class="text-danger">　　一旦使用者資料產生，變更此選項會導致使用者資料失效</div>
+              </div>
+
+            </div>
+          </div>
+
+          <a name="UI-enhance"></a>
+          <br><h4>介面增強</h4>
+          <div class="row">
+            <div class="col-xs-offset-0 col-xs-11">
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="DoubleClickCloseTab" data-section="界面增强" data-name="双击关闭标签页">
+                  雙按關閉分頁
+                </label>
+                <div class="text-muted">　　直接在分頁上雙按就可以關閉頁面</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="RightClickCloseTab" data-section="界面增强" data-name="右键关闭标签页">
+                  右鍵關閉分頁
+                </label>
+                <div class="text-muted">　　開啟此選項時，按住 <kbd>SHIFT</kbd> 再按滑鼠右鍵依然可以開啟選單</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="HoverActivateTab" data-section="界面增强" data-name="悬停激活标签页">
+                  懸停激活分頁
+                </label>
+                <div class="text-muted">　　鼠標懸停在分頁壹定時間將會自動激活分頁，註意不要放在關閉按鈕上</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="KeepLastTab" data-section="界面增强" data-name="保留最后标签">
+                  保留最後分頁
+                </label>
+                <div class="text-muted">　　防止關閉最後的分頁時關閉整個瀏覽器（新增分頁）</div>
+                <div class="text-muted">　　※手動點選關閉按鈕時無法阻止</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="HoverTabSwitch" data-section="界面增强" data-name="悬停快速标签切换">
+                  懸停快速分頁切換
+                </label>
+                <div class="text-muted">　　滑鼠懸停在分頁列時，滾動滑鼠滾輪可切換分頁</div>
+                <div class="form-inline">
+                  <div class="form-control-static">　　懸停時間：</div>
+                  <input type="text" class="form-control kv" id="HoverTime" data-section="界面增强" data-name="悬停时间">
+                  <div class="form-control-static text-muted">懸停多久後激活標簽頁，單位毫秒，不填為系統默認值</div>
+                </div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="RightTabSwitch" data-section="界面增强" data-name="右键快速标签切换">
+                  右鍵快速分頁切換
+                </label>
+                <div class="text-muted">　　按住滑鼠右鍵時，滾動滑鼠滾輪可切換分頁</div>
+                <div class="text-muted">　　※這個功能會影響滑鼠手勢（GreenChrome內建的不受影響）</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="BookMarkNewTab" data-section="界面增强" data-name="新标签打开书签">
+                  新分頁開啟書籤
+                </label>
+                <div class="text-muted">　　點選書籤在新分頁中開啟（不支援資料夾中的書籤）</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="OpenUrlNewTab" data-section="界面增强" data-name="新标签打开网址">
+                  新分頁開啟網址
+                </label>
+                <div class="text-muted">　　網址列輸入的網址在新分頁中開啟</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="NotBlankTab" data-section="界面增强" data-name="新标签页不生效">
+                  新分頁不生效
+                </label>
+                <div class="text-muted">　　目前頁面是新分頁時，新分頁開啟書籤、新分頁開啟網址 不生效</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="FrontNewTab" data-section="界面增强" data-name="前台打开新标签">
+                  前景開啟新分頁
+                </label>
+                <div class="text-muted">　　新分頁開啟書籤 的新分頁將會在前景開啟</div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <a name="append-command"></a>
+          <br><h4>追加參數</h4>
+
+          <div class="row">
+            <div class="col-xs-offset-0 col-xs-11">
+              <div class="text-muted">這裡定義的<a href="https://www.google.com/?gws_rd=ssl#q=chrome指令行參數" target="_blank">Chrome指令行參數</a>，可在Chrome啟動時自動插入</div>
+              <ul class="list-group" id="additional_parameter">
+                <!-- <li class="list-group-item">disable-directwrite-for-ui<a href="#"><span class="glyphicon glyphicon-remove pull-right"></span></a></li> -->
+              </ul>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="輸入您要追加的參數">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary add_section" type="button" data-section="追加参数">增加</button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <a name="start-run"></a>
+          <br><h4>啟動時執行</h4>
+
+          <div class="row">
+            <div class="col-xs-offset-0 col-xs-11">
+              <div class="text-muted">這裡的程式會隨Chrome一起啟動，如果路徑有空格需要加入引號</div>
+              <div class="text-muted">如果<code>%app%</code>之類的展開後含有空格，也是需要加入引號的</div>
+              <ul class="list-group" id="start_program">
+              </ul>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="輸入您要啟動時執行的程式">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary add_section" type="button" data-section="启动时运行">增加</button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <a name="end-run"></a>
+          <br><h4>關閉時執行</h4>
+
+          <div class="row">
+            <div class="col-xs-offset-0 col-xs-11">
+              <div class="text-muted">這裡的程式會在Chrome關閉時啟動（隱藏執行）</div>
+              <div class="text-muted">通常用於清理一些殘留程式，例如結束Lantern後取消系統代理</div>
+              <ul class="list-group" id="close_program">
+              </ul>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="輸入您要關閉時執行的程式">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary add_section" type="button" data-section="关闭时运行">增加</button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <a name="mouse-gesture"></a>
+          <br><h4>滑鼠手勢</h4>
+          <div class="row">
+            <div class="col-xs-offset-0 col-xs-11">
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="MouseGesture" data-section="鼠标手势" data-name="启用">
+                  啟用
+                </label>
+                <div class="text-muted">　　關閉後可以使用別的滑鼠手勢軟體（還得關閉右鍵快速分頁切換）</div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="GestureTrack" data-section="鼠标手势" data-name="轨迹">
+                  軌跡
+                </label>
+                <div class="text-muted">　　是否顯示滑鼠軌跡</div>
+              </div>
+
+              <div class="form-inline">
+                <div class="form-control-static">軌跡粗細：</div>
+                <input type="text" class="form-control kv" id="TrackThickness" data-section="鼠标手势" data-name="轨迹粗细">
+                <div class="form-control-static">軌跡顏色：</div>
+                <div id="colorpicker" class="input-group" data-section="鼠标手势" data-name="轨迹颜色">
+                  <input type="text" value="#00AABB" class="form-control"/>
+                  <span class="input-group-addon"><i></i></span>
+                </div>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="GestureResult" data-section="鼠标手势" data-name="动作">
+                  動作
+                </label>
+                <div class="text-muted">　　是否顯示識別結果</div>
+              </div>
+
+              <h5>滑鼠手勢管理
+              <small>
+                <span class="text-muted">支援四個手勢方向：<kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd></span>
+              </small>
+              </h5>
+              <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th>方向</th>
+                      <th>名稱</th>
+                      <th>動作（<a href="https://support.google.com/chrome/answer/157179?hl=zh-Hant" target="_blank">鍵盤快速鍵</a>）</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="MouseGestureList">
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
+          <a name="check-update"></a>
+          <h4>檢查 Chrome 更新</h4>
+          <div class="row">
+            <div class="col-xs-offset-0 col-xs-11">
+
+              <div class="form-inline">
+                <p class="form-control-static">檢查版本：</p>
+                <select id="branch" class="selectpicker">
+                  <option value="Stable">穩定版 Stable</option>
+                  <option value="Beta">測試版 Beta</option>
+                  <option value="Dev">開發版 Dev</option>
+                  <option value="Canary">金絲雀 Canary</option>
+                </select>
+                <select id="arch" class="selectpicker">
+                  <option value="x86">32位 x86</option>
+                  <option value="x64">64位 x64</option>
+                </select>
+              </div>
+
+              <div class="form-inline">
+                <p class="form-control-static">更新器地址：</p>
+                <input type="text" class="form-control kv" style="width:70%;" id="ChromeUpdater" data-section="检查更新" data-name="更新器地址">
+                <div class="text-muted">　如果不需要每次啟動chrome自動檢查更新，就直接清空這個數據</div>
+                <p class="text-muted">　如果妳想手動更新，可訪問 <a href="https://api.shuax.com/tools/getchrome" target="_blank">這裏</a> 下載Chrome離線安裝包</p>
+              </div>
+
+            </div>
+          </div>
+
+          <h4></h4>
+
+        </div>
+      </div>
+    </div>
+    <script src="static/jquery.min.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <script src="static/bootstrap-colorpicker.min.js"></script>
+    <script src="static/bootstrap-select.min.js"></script>
+    <script src="static/setting.js?5.9.8"></script>
+  </body>
+</html>
